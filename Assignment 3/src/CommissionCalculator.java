@@ -3,37 +3,77 @@
  */
 
 /**
- *
- * @author StudentName
+ * @author Alex Louden
+ * Assignment 3
+ * 4/25/2018
  */
+
+//Imports
+import java.util.Scanner;
 
 public class CommissionCalculator {
     
     public static void main(String args[]) {
-        // Initialize a Scanner to read input from the command line
+        
+    	// Initialize a Scanner to read input from the command line
+    	Scanner sc = new Scanner(System.in);
     	
-    	/* Note that we'll be doing this at least once and most likely multiple times...
-    	 * Prompt the user with a menu of the four items and their values (this information is included in the problem statement)
-    	 */
-    	System.out.println("Item\tValue");
-        System.out.println("1\t$239.99");
-        System.out.println("2\t$129.75");
-        System.out.println("3\t$99.95");
-        System.out.println("4\t$350.89"); 
-    	/* Display the user's current compensation
-    	 * 
-    	 * Prompt and take input from the user (you may assume that they will only enter int values)
-    	 * They'll enter an item number (1 - 4) to record its sale or 0 to exit
-    	 * 
-    	 * NOTE: THE USER DOES NOT ENTER PRICES DIRECTLY... THEY ENTER ITEM NUMBERS TO INDICATE WHAT WAS SOLD
-    	 * NOTE: THE USER MAY ENTER THE SAME ITEM NUMBRER MULTIPLE TIMES
-    	 * 
-    	 * If the user provides invalid input (a value other than 0 - 4) display "ERROR: Invalid input!" and prompt them again
-    	 */
+    	//Use variables for factors, for easy change down the road
+    	double[] items = {239.99,129.75,99.95,350.89};
+    	double com = .09;
     	
-    	/* After the user enters 0, display the salesperson's earnings in the format "Total earnings: $NNN.NN" and exit
-    	 * For example, if the salesperson sold two item 3s this week the final output would be "Total earnings: $217.99"
+    	//Starting salary is 200
+    	double earnings = 200;
+    	
+    	//An input of -1 will not add an item, or trip the exit.
+    	//This is only a safety, if a bug is introduced in the code below, to avoid incorrect payment.
+    	int input = -1;
+
+    	/* While loop actually prints update on the iteration after the one that received the update.
+    	 * This is safe because if an item is added, another loop is guaranteed.  It cuts down on repeated code.
     	 */
+    	while(input != 0) {
+    		//Prompt the user with a menu of the four items and their values
+    		System.out.println("Item\tValue");
+    		//Use array, so prices can be updated in one place
+    		System.out.printf("1\t$%.2f%n",items[0]);
+    		System.out.printf("2\t$%.2f%n",items[1]);
+    		System.out.printf("3\t$%.2f%n",items[2]);
+    		System.out.printf("4\t$%.2f%n",items[3]);
+    		System.out.printf("Current compensation: $%.2f%n", earnings);
+    		System.out.print("Please select an item from the list above (or enter 0 to exit):");
+    		
+    		//Wait for input
+    		input = sc.nextInt();
+    		/* Put result on next line.  This is only necessary for test output to look clean, because it
+    		 * does not add a newline after input, while regular use does.  With this new line, regular
+    		 * just has more spacing, which I think I prefer anyway.
+    		 */
+    		System.out.printf("%n");
+    		
+    		//Report error for invalid input
+    		if(input > 4 || input < 0) {
+    			System.out.println("ERROR: Invalid input!");
+    		}
+    		
+    		/* Print Total earnings if exiting program
+    		 * This case is handled before earnings addition.  Thus, even if a bug is introduced,
+    		 * Payment accuracy may still be maintained.
+    		 */
+    		else if(input == 0) {
+    			System.out.printf("Total earnings: $%.2f%n",earnings);
+    		}
+    		
+    		//Add commission to earnings.
+    		else {
+    			earnings += items[input-1] * com;
+    		}
+    	//With some changed logic, total earnings print line could also be here.  I just like it this way.	
+    	//End loop
+    	}
+    	
+    	//Close Scanner
+    	sc.close();
     }
     
 }
