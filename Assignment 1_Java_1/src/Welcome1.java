@@ -10,4 +10,8 @@ public class Welcome1 {
 	public static void main(String[] args) {
 		System.out.println("Welcome to Java Programming!");
 	}
+<<<<<<< HEAD
 } aa
+=======
+}
+>>>>>>> branch 'master' of https://github.com/alexlouden29/Java_extension.git
